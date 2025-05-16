@@ -15,8 +15,8 @@ const character: Character = {
         ensemble: {
           type: "stdio",
           name: "Ensemble MCP Server",
-          command: "",
-          args: [""],
+          command: "/home/ubuntu/.nvm/versions/node/v23.3.0/bin/node",
+          args: ['/home/ubuntu/ensemble-framework/packages/mcp-server/dist/src/index.js'],
         }
       }
     }
