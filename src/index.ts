@@ -4,7 +4,7 @@ import oniiAgent from "./agents/onii";
 import orchestatorAgent from "./agents/orchestrator";
 
 const project: Project = {
-  agents: [orchestatorAgent],
+  agents: [orchestatorAgent, oniiAgent],
 };
 
 export default project;
