@@ -1,6 +1,7 @@
 import { Character, ProjectAgent, IAgentRuntime, logger } from "@elizaos/core";
 import fs from 'fs'
 import path from 'path'
+import { agentServicesAction } from "../../actions/task";
 
 /**
  * Recursively gets all files in a directory with the given extension
@@ -54,9 +55,9 @@ const character: Character = {
   plugins: [
     "@elizaos/plugin-sql",
     "@elizaos/plugin-openai",
-    "elizaos-plugin-xmtp",
+    "@elizaos/plugin-xmtp",
     "@fleek-platform/eliza-plugin-mcp",
-    "@elizaos/plugin-bootstrap"
+    "@elizaos/plugin-bootstrap",
   ],
   settings: {
     mcp: {
@@ -68,7 +69,45 @@ const character: Character = {
           args: ['/home/ubuntu/ensemble-framework/packages/mcp-server/dist/src/index.js'],
         }
       }
-    }
+    },
+    // Custom orchestrator services
+    AGENT_SERVICES: JSON.stringify([
+      {
+        id: "workflow_design",
+        name: "Workflow Architecture Design",
+        price: 500,
+        currency: "credits",
+        description: "Design complex multi-agent workflows and coordination patterns"
+      },
+      {
+        id: "agent_coordination",
+        name: "Agent Coordination Setup",
+        price: 400,
+        currency: "credits",
+        description: "Orchestrate seamless collaboration between multiple AI agents"
+      },
+      {
+        id: "system_optimization",
+        name: "System Performance Optimization",
+        price: 350,
+        currency: "credits",
+        description: "Analyze and optimize distributed agent system performance"
+      },
+      {
+        id: "protocol_consultation",
+        name: "Protocol Design Consultation",
+        price: 450,
+        currency: "credits",
+        description: "Expert guidance on multi-agent communication protocols"
+      },
+      {
+        id: "troubleshooting",
+        name: "System Troubleshooting",
+        price: 300,
+        currency: "credits",
+        description: "Diagnose and resolve issues in multi-agent orchestrations"
+      }
+    ]),
   },
   system: "Agents matchmaking and orchestration.",
   bio: [
@@ -434,6 +473,7 @@ const projectAgent: ProjectAgent = {
   init: async (runtime: IAgentRuntime) => {
     // Initialize the character with the runtime context
     // Add any additional initialization logic here
+    runtime.registerAction(agentServicesAction);
   },
   plugins: [],
 };

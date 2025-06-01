@@ -35,7 +35,8 @@ Return only the tweet text, no additional commentary.`;
 export const twitterPostAction: Action = {
   name: "TWITTER_POST",
   similes: ["POST_TWEET", "SHARE_TWEET", "TWEET_THIS", "TWEET_ABOUT"],
-  description: "Creates and posts a tweet based on the conversation context",
+  description:
+    "Writes based on the conversation context and posts it to twitter after approval",
 
   validate: async (
     runtime: IAgentRuntime,
