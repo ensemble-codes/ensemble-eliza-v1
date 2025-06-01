@@ -1,0 +1,130 @@
+# Project Intelligence: Ensemble Eliza v1
+
+## Project Context
+This is an elizaOS-based multi-agent system implementing orchestrator patterns for agent coordination. The project serves as both a working implementation and a foundation for building sophisticated AI agent ecosystems.
+
+## Critical Patterns
+
+### Memory Bank First
+- ALWAYS read the Memory Bank files before starting any work
+- Memory Bank structure: projectbrief.md → productContext.md → systemPatterns.md → techContext.md → activeContext.md → progress.md
+- Update Memory Bank when discovering new patterns or after significant changes
+
+### elizaOS Architecture
+- Agents live in `src/agents/` with one directory per agent
+- Each agent exports a configuration object as default export
+- Plugins are centrally configured in `src/plugin.ts`
+- Project configuration happens in `src/index.ts` with agent registry pattern
+
+### Development Workflow
+- Use pnpm for package management (project uses pnpm overrides for XMTP)
+- TypeScript-first development with strict type checking
+- ESM module system throughout
+- Vitest for testing with coverage requirements
+
+## File Organization Patterns
+
+### Agent Structure
+```
+src/agents/
+├── orchestrator/     # Central coordination agent
+│   └── index.ts     # Agent configuration export
+└── onii/           # Specialized agent
+    └── index.ts    # Agent configuration export
+```
+
+### Plugin Integration
+- elizaOS plugins: Use existing ecosystem plugins when possible
+- Custom plugins: Define in `src/plugin.ts` using plugin composition pattern
+- Plugin versions: Watch for beta version compatibility issues
+
+### Knowledge Management
+- Knowledge segregated by domain in `src/knowledge/`
+- Shared knowledge for cross-agent use
+- Agent-specific knowledge in subdirectories
+
+## Development Intelligence
+
+### elizaOS Specifics
+- Working with beta versions (v1.0.0-beta.32+) - expect potential breaking changes
+- Plugin ecosystem is rich but evolving rapidly
+- Agent coordination happens through elizaOS message passing
+- Follow elizaOS architectural patterns rather than custom implementations
+
+### Build and Testing
+- tsup for fast TypeScript bundling
+- Vitest with coverage - comprehensive testing expected
+- Prettier for code formatting consistency
+- Multiple test modes: run, watch, coverage
+
+### Known Challenges
+- Mixed plugin versions in dependencies (beta.32 vs beta.33)
+- XMTP plugin requires pnpm override (potential dependency conflict)
+- Beta software stability considerations
+- Agent coordination complexity
+
+## User Preferences
+
+### Code Quality Standards
+- TypeScript strict mode adherence
+- Comprehensive test coverage expected
+- Clean, well-documented code
+- elizaOS pattern compliance
+
+### Architecture Preferences
+- Multi-agent orchestrator pattern over peer-to-peer
+- Plugin ecosystem leverage over custom implementations
+- Modular, extensible design
+- Production-ready approach
+
+### Documentation Standards
+- Memory Bank maintenance critical
+- Code should be self-documenting
+- Clear architectural decision documentation
+- Testing strategy documentation
+
+## Project Evolution Notes
+
+### Current State (Memory Bank Creation)
+- Project has solid foundation with agents, plugins, and tests
+- Implementation details need investigation and validation
+- Memory Bank established for context preservation
+- Focus on understanding before extending
+
+### Development Priorities
+1. Foundation validation (agents, plugins, tests)
+2. Documentation completeness
+3. Extensibility and scalability
+4. Production readiness
+
+### Extension Patterns
+- New agents: Follow agent-per-directory pattern
+- New plugins: Add to central plugin registry
+- New knowledge: Domain-specific organization
+- New tests: Maintain coverage standards
+
+## Tool and Command Patterns
+
+### Common Commands
+```bash
+pnpm dev          # Development with hot reload
+pnpm test         # Run test suite
+pnpm test:watch   # Watch mode testing
+pnpm build        # Production build
+pnpm lint         # Code formatting
+```
+
+### File Investigation
+- Always check agent directories for implementation details
+- Plugin configurations may be complex - investigate thoroughly
+- Knowledge base content determines agent capabilities
+- Test files reveal expected behaviors
+
+## Critical Dependencies
+- @elizaos/core: Framework foundation
+- @elizaos/plugin-*: Essential plugin ecosystem
+- TypeScript: Type safety and development experience
+- Vitest: Testing and quality assurance
+- tsup: Build optimization
+
+Remember: This is a beta ecosystem project - stay flexible and expect evolution in elizaOS patterns and plugin interfaces. 

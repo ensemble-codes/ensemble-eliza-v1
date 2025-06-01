@@ -101,8 +101,8 @@ export const twitterPostAction: Action = {
       };
 
       const worker = {
-        name: "Confirm Twitter Post",
-        description: "Confirm if the tweet should be posted.",
+        name: "Post a tweet",
+        description: "Write a tweet and post it to Twitter after confirmation.",
         execute: async (
           runtime: IAgentRuntime,
           options: { option: string },
@@ -142,9 +142,9 @@ export const twitterPostAction: Action = {
 
       runtime.createTask({
         roomId: message.roomId,
-        name: "Confirm Twitter Post",
+        name: "CONFIRM_ACTION",
         description: "Confirm the tweet to be posted.",
-        tags: ["TWITTER_POST", "AWAITING_CHOICE"],
+        tags: ["confirmation", "AWAITING_CHOICE"],
         metadata: {
           options: [
             {

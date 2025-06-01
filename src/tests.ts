@@ -1,6 +1,5 @@
 import type { Content, IAgentRuntime, Memory, State, TestSuite, UUID } from '@elizaos/core';
 import { v4 as uuidv4 } from 'uuid';
-import { character } from './index';
 
 export class StarterTestSuite implements TestSuite {
   name = 'starter';
@@ -8,30 +7,48 @@ export class StarterTestSuite implements TestSuite {
 
   tests = [
     {
-      name: 'Character configuration test',
+      name: 'Project structure test',
       fn: async (runtime: IAgentRuntime) => {
-        const requiredFields = ['name', 'bio', 'plugins', 'system', 'messageExamples'];
-        const missingFields = requiredFields.filter((field) => !(field in character));
-
-        if (missingFields.length > 0) {
-          throw new Error(`Missing required fields: ${missingFields.join(', ')}`);
+        // Test that the runtime has been properly initialized with actions
+        if (!runtime.actions || runtime.actions.length === 0) {
+          throw new Error('Runtime should have actions registered');
         }
 
-        // Additional character property validations
-        if (character.name !== 'Eliza') {
-          throw new Error(`Expected character name to be 'Eliza', got '${character.name}'`);
+        // Check for required actions
+        const requiredActions = ['HELLO_WORLD', 'GENERATE_TWITTER_POST'];
+        const missingActions = requiredActions.filter(
+          actionName => !runtime.actions.find(action => action.name === actionName)
+        );
+
+        if (missingActions.length > 0) {
+          throw new Error(`Missing required actions: ${missingActions.join(', ')}`);
         }
-        if (!Array.isArray(character.plugins)) {
-          throw new Error('Character plugins should be an array');
+
+        // Check for providers
+        if (!runtime.providers || runtime.providers.length === 0) {
+          throw new Error('Runtime should have providers registered');
         }
-        if (!character.system) {
-          throw new Error('Character system prompt is required');
+      },
+    },
+    {
+      name: 'Runtime initialization test',
+      fn: async (runtime: IAgentRuntime) => {
+        // Test that the runtime has basic required properties
+        if (!runtime) {
+          throw new Error('Runtime should be defined');
         }
-        if (!Array.isArray(character.bio)) {
-          throw new Error('Character bio should be an array');
+
+        if (!runtime.actions) {
+          throw new Error('Runtime should have actions property');
         }
-        if (!Array.isArray(character.messageExamples)) {
-          throw new Error('Character message examples should be an array');
+
+        if (!runtime.providers) {
+          throw new Error('Runtime should have providers property');
+        }
+
+        // Test that we can access basic runtime methods
+        if (typeof runtime.getSetting !== 'function') {
+          throw new Error('Runtime should have getSetting method');
         }
       },
     },
@@ -176,8 +193,93 @@ export class StarterTestSuite implements TestSuite {
         }
       },
     },
+    {
+      name: 'Twitter action validation test',
+      fn: async (runtime: IAgentRuntime) => {
+        // Mock Twitter credentials for testing
+        const originalUsername = process.env.TWITTER_USERNAME;
+        const originalPassword = process.env.TWITTER_PASSWORD;
+        
+        process.env.TWITTER_USERNAME = 'test_user';
+        process.env.TWITTER_PASSWORD = 'test_password';
+
+        try {
+          const message: Memory = {
+            entityId: uuidv4() as UUID,
+            roomId: uuidv4() as UUID,
+            content: {
+              text: 'Can you tweet about AI development?',
+              source: 'test',
+            },
+          };
+
+          const state: State = {
+            values: {},
+            data: {},
+            text: '',
+          };
+
+          // Test the Twitter post generation action
+          const twitterAction = runtime.actions.find((a) => a.name === 'GENERATE_TWITTER_POST');
+          if (!twitterAction) {
+            throw new Error('GENERATE_TWITTER_POST action not found in runtime.actions');
+          }
+
+          // Test validation
+          const isValid = await twitterAction.validate(runtime, message, state);
+          if (!isValid) {
+            throw new Error('Twitter action validation failed');
+          }
+
+          let responseReceived = false;
+          let tweetGenerated = false;
+
+          // Test handler
+          await twitterAction.handler(
+            runtime,
+            message,
+            state,
+            {},
+            async (content: Content) => {
+              responseReceived = true;
+              if (content.text && content.text.includes('generated this Twitter post')) {
+                tweetGenerated = true;
+              }
+              return [];
+            },
+            []
+          );
+
+          if (!responseReceived) {
+            throw new Error('Twitter action did not produce a response');
+          }
+
+          if (!tweetGenerated) {
+            throw new Error('Twitter action did not generate expected tweet content');
+          }
+
+          // Check if pending post was stored in state
+          if (!state.pendingTwitterPosts || Object.keys(state.pendingTwitterPosts).length === 0) {
+            throw new Error('Twitter action did not store pending post in state');
+          }
+
+        } finally {
+          // Restore original environment variables
+          if (originalUsername) {
+            process.env.TWITTER_USERNAME = originalUsername;
+          } else {
+            delete process.env.TWITTER_USERNAME;
+          }
+          
+          if (originalPassword) {
+            process.env.TWITTER_PASSWORD = originalPassword;
+          } else {
+            delete process.env.TWITTER_PASSWORD;
+          }
+        }
+      },
+    },
   ];
 }
 
-// Export a default instance
-export default new StarterTestSuite();
+export default StarterTestSuite; 
