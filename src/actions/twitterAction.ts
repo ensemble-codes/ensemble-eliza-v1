@@ -7,7 +7,7 @@ import type {
   State,
 } from '@elizaos/core';
 import { logger, ModelType } from '@elizaos/core';
-// import { Scraper } from 'agent-twitter-client';
+import { Scraper } from 'agent-twitter-client';
 
 /**
  * Interface for pending Twitter posts stored in state
@@ -30,6 +30,8 @@ export const generateTwitterPostAction: Action = {
 
   validate: async (runtime: IAgentRuntime, message: Memory, state: State): Promise<boolean> => {
     // Check if Twitter credentials are configured
+    logger.info('Start - Validating TWITTER_POST action');
+
     const hasCredentials = process.env.TWITTER_USERNAME && process.env.TWITTER_PASSWORD;
     if (!hasCredentials) {
       logger.warn('Twitter credentials not configured');
@@ -39,7 +41,10 @@ export const generateTwitterPostAction: Action = {
     // Check if the user is requesting a Twitter post
     const text = message.content.text?.toLowerCase() || '';
     const keywords = ['tweet', 'twitter', 'post to twitter', 'share on twitter', 'write a tweet'];
-    return keywords.some(keyword => text.includes(keyword));
+    const response = keywords.some(keyword => text.includes(keyword));
+    logger.info('End - Validating TWITTER_POST action');
+
+    return response
   },
 
   handler: async (
@@ -225,32 +230,32 @@ export const confirmTwitterPostAction: Action = {
 
       try {
         // Initialize Twitter scraper
-        // const scraper = new Scraper();
+        const scraper = new Scraper();
         
-        // // Login to Twitter
-        // await scraper.login(
-        //   process.env.TWITTER_USERNAME!,
-        //   process.env.TWITTER_PASSWORD!,
-        //   process.env.TWITTER_EMAIL
-        // );
+        // Login to Twitter
+        await scraper.login(
+          process.env.TWITTER_USERNAME!,
+          process.env.TWITTER_PASSWORD!,
+          process.env.TWITTER_EMAIL
+        );
 
-        // // Post the tweet
-        // await scraper.sendTweet(postToConfirm.content);
+        // Post the tweet
+        await scraper.sendTweet(postToConfirm.content);
 
-        // logger.info(`Successfully posted tweet: ${postToConfirm.content}`);
+        logger.info(`Successfully posted tweet: ${postToConfirm.content}`);
 
-        // // Remove the pending post from state
-        // const updatedPendingPosts = { ...pendingPosts };
-        // delete updatedPendingPosts[postToConfirm.postId];
-        // state.pendingTwitterPosts = updatedPendingPosts;
+        // Remove the pending post from state
+        const updatedPendingPosts = { ...pendingPosts };
+        delete updatedPendingPosts[postToConfirm.postId];
+        state.pendingTwitterPosts = updatedPendingPosts;
 
-        // const responseContent: Content = {
-        //   text: `✅ Successfully posted to Twitter!\n\n"${postToConfirm.content}"`,
-        //   source: message.content.source,
-        // };
+        const responseContent: Content = {
+          text: `✅ Successfully posted to Twitter!\n\n"${postToConfirm.content}"`,
+          source: message.content.source,
+        };
 
-        // await callback(responseContent);
-        // return responseContent;
+        await callback(responseContent);
+        return responseContent;
       } catch (twitterError) {
         logger.error('Error posting to Twitter:', twitterError);
         
