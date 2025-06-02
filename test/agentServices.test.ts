@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { agentServicesAction } from "../src/actions/task";
+import { agentServicesAction } from "../src/actions/agentServices";
 import { IAgentRuntime, Memory, State, Character } from "@elizaos/core";
 
 describe("Agent Services Action", () => {

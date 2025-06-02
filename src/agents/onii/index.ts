@@ -1,6 +1,6 @@
 import { Character, IAgentRuntime, ProjectAgent } from "@elizaos/core";
 import { twitterPostAction } from "./actions/post";
-import { agentServicesAction } from "../../actions/task";
+import { agentServicesAction } from "../../actions/agentServices";
 
 const character: Character = {
   name: "Onii",

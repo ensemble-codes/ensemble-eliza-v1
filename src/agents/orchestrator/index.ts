@@ -1,7 +1,7 @@
 import { Character, ProjectAgent, IAgentRuntime, logger } from "@elizaos/core";
 import fs from 'fs'
 import path from 'path'
-import { agentServicesAction } from "../../actions/task";
+import { agentServicesAction } from "../../actions/agentServices";
 
 /**
  * Recursively gets all files in a directory with the given extension
