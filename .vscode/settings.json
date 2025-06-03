@@ -1,0 +1,72 @@
+{
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.suggest.autoImports": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.preferences.includePackageJsonAutoImports": "auto",
+  
+  "eslint.workingDirectories": ["src"],
+  "eslint.validate": ["javascript", "typescript"],
+  
+  "debug.console.fontSize": 14,
+  "debug.console.lineHeight": 20,
+  "debug.openDebug": "openOnDebugBreak",
+  "debug.showBreakpointsInOverviewRuler": true,
+  "debug.inlineValues": "auto",
+  "debug.focusWindowOnBreak": true,
+  
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/dist/**": true,
+    "**/.elizaos/**": true
+  },
+  
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.elizaos": true,
+    "**/pnpm-lock.yaml": true
+  },
+  
+  "files.associations": {
+    "*.env.*": "dotenv",
+    ".elizarc": "json",
+    "elizaconfig.json": "json"
+  },
+  
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "**/elizaconfig.json"
+      ],
+      "url": "https://raw.githubusercontent.com/elizaOS/eliza/main/schemas/elizaconfig.schema.json"
+    }
+  ],
+
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  
+  "emmet.includeLanguages": {
+    "typescript": "javascript"
+  },
+  
+  "extensions.ignoreRecommendations": false,
+  
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.preferences.renameMatchingJsxTags": true,
+  
+  "git.ignoreLimitWarning": true,
+  
+  "problems.decorations.enabled": true,
+  "problems.showCurrentInStatus": true
+} 

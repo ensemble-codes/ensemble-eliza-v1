@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+
+    {
+      "name": "💾 Attach to Running elizaOS",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "restart": true,
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": ".",
+      "sourceMaps": true,
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ],
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**"
+      ]
+    }
+  ],
+  "compounds": [
+    {
+      "name": "🔥 Debug All Components",
+      "configurations": ["🚀 Debug elizaOS App", "🧪 Debug Tests"],
+      "stopAll": true
+    }
+  ]
+} 
