@@ -9,7 +9,7 @@ import {
   ModelType,
   State,
 } from "@elizaos/core";
-
+import { Scraper } from 'agent-twitter-client';
 const tweetGenerationTemplate = `# Task: Create a post in the style and voice of {{agentName}}.
 {{system}}
 
@@ -33,7 +33,7 @@ Recent Context:
 Return only the tweet text, no additional commentary.`;
 
 export const twitterPostAction: Action = {
-  name: "TWITTER_POST",
+  name: "CREATE_POST",
   similes: ["POST_TWEET", "SHARE_TWEET", "TWEET_THIS", "TWEET_ABOUT"],
   description: "Creates and posts a tweet based on the conversation context",
 
@@ -42,6 +42,7 @@ export const twitterPostAction: Action = {
     message: Memory,
     state: State
   ): Promise<boolean> => {
+    logger.info("Start Validating CREATE_POST action");
     const room = state.data.room ?? (await runtime.getRoom(message.roomId));
     if (!room) {
       throw new Error("Room not found");
@@ -49,17 +50,20 @@ export const twitterPostAction: Action = {
 
     const pendingTasks = await runtime.getTasks({
       roomId: message.roomId,
-      tags: ["TWITTER_POST"],
+      tags: ["CREATE_POST"],
     });
 
     if (pendingTasks && pendingTasks.length > 0) {
       if (!runtime.getTaskWorker("Confirm Twitter Post")) {
-        await runtime.deleteTask(pendingTasks[0].id);
+        const isDeleted = await runtime.deleteTask(pendingTasks[0].id);
+        logger.info(`End of validating CREATE_POST action - returning ${isDeleted}`);
+        await isDeleted
       } else {
+        logger.info("End of validating CREATE_POST action - returning false");
         return false;
       }
     }
-
+    logger.info("End of validating CREATE_POST action - returning true");
     return true;
   },
 
@@ -72,6 +76,7 @@ export const twitterPostAction: Action = {
     _responses: Memory[]
   ) => {
     try {
+      logger.info("Start of handler for CREATE_POST action");
       const room = state.data.room ?? (await runtime.getRoom(message.roomId));
       if (!room) {
         throw new Error("No room found");
@@ -96,7 +101,7 @@ export const twitterPostAction: Action = {
 
       const responseContent: Content = {
         text: `I'll tweet this:\n\n${cleanTweet}`,
-        actions: ["TWITTER_POST"],
+        actions: ["CREATE_POST"],
         source: message.content.source,
       };
 
@@ -108,13 +113,15 @@ export const twitterPostAction: Action = {
           options: { option: string },
           task
         ) => {
+          logger.info("Start of worker for CREATE_POST action");
           if (options.option === "cancel") {
             await callback({
               ...responseContent,
               text: "OK, I won't post it.",
-              actions: ["TWITTER_POST_CANCELLED"],
+              actions: ["CREATE_POST_CANCELLED"],
             });
             await runtime.deleteTask(task.id);
+            logger.info("End of worker for CREATE_POST action");
             return;
           }
 
@@ -122,7 +129,7 @@ export const twitterPostAction: Action = {
             await callback({
               ...responseContent,
               text: "Bad choice. Should be 'post' or 'cancel'.",
-              actions: ["TWITTER_POST_INVALID_OPTION"],
+              actions: ["CREATE_POST_INVALID_OPTION"],
             });
             return;
           }
@@ -136,10 +143,13 @@ export const twitterPostAction: Action = {
         },
       };
 
-      if (!runtime.getTaskWorker("TWITTER_POST")) {
+      if (!runtime.getTaskWorker("CREATE_POST")) {
+        logger.info("Registering task worker for CREATE_POST action");
         runtime.registerTaskWorker(worker);
       }
 
+      logger.info("Registering task worker for CREATE_POST action");
+      
       runtime.createTask({
         roomId: message.roomId,
         name: "CONFIRM_ACTION",
@@ -161,19 +171,35 @@ export const twitterPostAction: Action = {
 
       responseContent.text += "\nWaiting for approval";
 
+      const scraper = new Scraper();
+        
+      // Login to Twitter
+      await scraper.login(
+        process.env.TWITTER_USERNAME!,
+        process.env.TWITTER_PASSWORD!,
+        process.env.TWITTER_EMAIL
+      );
+
+      // Post the tweet
+      await scraper.sendTweet(cleanTweet);
+
+      logger.info(`Successfully posted tweet: ${cleanTweet}`);
+
+      logger.info("Callback for CREATE_POST action");
+      
       await callback({
         ...responseContent,
-        actions: ["TWITTER_POST_TASK_NEEDS_CONFIRM"],
+        actions: ["CREATE_POST"],
       });
 
       logger.info(
-        "TWITTER_POST_TASK_NEEDS_CONFIRM",
-        runtime.getTasks({ roomId: message.roomId, tags: ["TWITTER_POST"] })
+        "CREATE_POST",
+        runtime.getTasks({ roomId: message.roomId, tags: ["CREATE_POST"] })
       );
 
       return responseContent;
     } catch (error) {
-      console.error("Error in TWITTER_POST action:", error);
+      console.error("Error in CREATE_POST action:", error);
       throw error;
     }
   },
@@ -190,7 +216,7 @@ export const twitterPostAction: Action = {
         name: "{{agentName}}",
         content: {
           text: "I'll tweet this:\n\nDeep learning isn't just about layers - it's about understanding how neural networks actually learn from patterns. The magic isn't in the math, it's in the emergent behaviors we're just beginning to understand.",
-          actions: ["TWITTER_POST"],
+          actions: ["CREATE_POST"],
         },
       },
     ],
@@ -205,7 +231,7 @@ export const twitterPostAction: Action = {
         name: "{{agentName}}",
         content: {
           text: "Tweet posted!\nhttps://twitter.com/username/status/123456789",
-          actions: ["TWITTER_POST"],
+          actions: ["CREATE_POST"],
         },
       },
     ],

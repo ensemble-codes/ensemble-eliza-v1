@@ -42,7 +42,7 @@ export const generateTwitterPostAction: Action = {
     const text = message.content.text?.toLowerCase() || '';
     const keywords = ['tweet', 'twitter', 'post to twitter', 'share on twitter', 'write a tweet'];
     const response = keywords.some(keyword => text.includes(keyword));
-    logger.info('End - Validating TWITTER_POST action');
+    logger.info('End - Validating TWITTER_POST action. response: ' + response);
 
     return response
   },

@@ -1,5 +1,6 @@
 import { Character, IAgentRuntime, ProjectAgent } from "@elizaos/core";
-import { confirmTwitterPostAction, generateTwitterPostAction } from "../../actions/twitterAction";
+import { twitterPostAction } from "./actions/post";
+// import { confirmTwitterPostAction, generateTwitterPostAction } from "../../actions/twitterAction";
 
 const character: Character = {
   name: "Onii",
@@ -8,7 +9,7 @@ const character: Character = {
     "@elizaos/plugin-openai",
     "@elizaos/plugin-xmtp",
     "@fleek-platform/eliza-plugin-mcp",
-    "@elizaos/plugin-twitter",
+    // "@elizaos/plugin-twitter",
     "@elizaos/plugin-bootstrap",
   ],
   settings: {
@@ -142,9 +143,9 @@ const projectAgent: ProjectAgent = {
   init: async (runtime: IAgentRuntime) => {
     // Initialize the character with the runtime context
     // Add any additional initialization logic here
-    // runtime.registerAction(twitterPostAction);
-    runtime.registerAction(generateTwitterPostAction);
-    runtime.registerAction(confirmTwitterPostAction);
+    runtime.registerAction(twitterPostAction);
+    // runtime.registerAction(generateTwitterPostAction);
+    // runtime.registerAction(confirmTwitterPostAction);
   },
   plugins: [],
 };
