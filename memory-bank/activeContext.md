@@ -2,6 +2,26 @@
 
 ## Current Work Focus
 
+### Service Detail Action Refactor (Completed ✅)
+**Status**: Successfully refactored the Service Detail action to return structured JSON format.
+
+**Completed**:
+- ✅ Updated service data model to include predefined parameters
+- ✅ Extended Onii agent's service configurations with parameter specifications
+- ✅ Refactored action to return `service_details` JSON format instead of plain text
+- ✅ Implemented proper service identification using LLM with fallback logic
+- ✅ Added enhanced error handling that asks users for clarification
+- ✅ Updated examples to demonstrate new JSON response format
+- ✅ Added TypeScript interfaces for structured data types
+
+**Key Features Implemented**:
+- **JSON Response Format**: Returns structured `service_details` type with complete service information
+- **Parameter Specifications**: Each service includes predefined parameters with requirements and descriptions
+- **Smart Service Identification**: LLM identifies requested service or returns "UNCLEAR" for ambiguous requests
+- **User Clarification**: When requests are unclear, provides helpful service list and asks for specifics
+- **Address Generation**: Proper `from`/`to` fields using agent and user identifiers
+- **Enhanced Error Handling**: Graceful degradation with user-friendly error messages
+
 ### Agent Services Action Implementation (Completed ✅)
 **Status**: Successfully implemented the Agent Services action based on provided specification.
 
@@ -37,6 +57,21 @@
 
 ## Recent Changes
 
+### Service Detail Action Refactor
+- Enhanced service data model to include parameters for each service
+- Updated Onii agent with comprehensive parameter specifications for all services:
+  - **Bull Post**: project_name, key_features, target_audience parameters
+  - **Twitter Thread**: topic, thread_length, tone parameters  
+  - **Stream Consultation**: platform, content_type, current_setup parameters
+- Implemented structured JSON response matching exact `service_details` specification
+- Added intelligent service identification with fallback to user clarification
+- Replaced plain text responses with structured data for API consumption
+
+### Service Configuration Enhancement  
+- Extended `AGENT_SERVICES` format to include `parameters` array
+- Standardized parameter structure with `name`, `required`, and `description` fields
+- Maintained backward compatibility with existing service definitions
+
 ### Agent Services Implementation
 - Created robust action following established patterns from existing Twitter post action
 - Added Onii-specific services (Blessings, Bull Posts, Twitter Threads, etc.)
@@ -52,11 +87,12 @@
 ## Active Decisions and Considerations
 
 ### Implementation Decisions Made
-- **Configuration Strategy**: Services defined in agent settings as JSON strings for flexibility
-- **Validation Approach**: Combined keyword detection with question patterns for accuracy
-- **Response Format**: Dual format - human-readable text plus structured data for API consumers
-- **Error Handling**: Graceful degradation with user-friendly error messages
-- **Testing Strategy**: Comprehensive coverage including edge cases and error scenarios
+- **Parameter Definition**: Parameters are predefined in service configuration for consistency
+- **Field Naming**: Standardized on `name` field for parameter identifiers
+- **Service Identification**: Maintained LLM-based identification with enhanced prompting
+- **Response Format**: Pure JSON output without human-readable text for API consumption
+- **Error Strategy**: User clarification requests for ambiguous or invalid service requests
+- **Address Format**: Agent-based identifiers using `{agentName}.ensemble` pattern
 
 ### Architecture Decisions Confirmed
 - **Multi-Agent Pattern**: Successfully extended orchestrator-hub model

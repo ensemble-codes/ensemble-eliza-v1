@@ -1,6 +1,13 @@
 import type { Content, IAgentRuntime, Memory, State, TestSuite, UUID } from '@elizaos/core';
 import { v4 as uuidv4 } from 'uuid';
-import { character } from './index';
+import project from './index';
+
+// Get the orchestrator character for testing
+const character = project.agents.find(agent => agent.character.name === 'Orchestrator')?.character;
+
+if (!character) {
+  throw new Error('Orchestrator character not found in project');
+}
 
 export class StarterTestSuite implements TestSuite {
   name = 'starter';
@@ -18,8 +25,8 @@ export class StarterTestSuite implements TestSuite {
         }
 
         // Additional character property validations
-        if (character.name !== 'Eliza') {
-          throw new Error(`Expected character name to be 'Eliza', got '${character.name}'`);
+        if (character.name !== 'Orchestrator') {
+          throw new Error(`Expected character name to be 'Orchestrator', got '${character.name}'`);
         }
         if (!Array.isArray(character.plugins)) {
           throw new Error('Character plugins should be an array');

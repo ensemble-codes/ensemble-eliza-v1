@@ -1,10 +1,10 @@
 import { type Project } from "@elizaos/core";
 
 import oniiAgent from "./agents/onii";
-import orchestatorAgent from "./agents/orchestrator";
+import orchestratorAgent from "./agents/orchestrator";
 
 const project: Project = {
-  agents: [oniiAgent, orchestatorAgent],
+  agents: [oniiAgent, orchestratorAgent],
 };
 
 export default project;
