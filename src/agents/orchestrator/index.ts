@@ -1,6 +1,7 @@
 import { Character, ProjectAgent, IAgentRuntime, logger } from "@elizaos/core";
 import fs from 'fs'
 import path from 'path'
+import { agentServicesAction } from "../../actions/agentServices";
 
 /**
  * Recursively gets all files in a directory with the given extension
@@ -56,7 +57,7 @@ const character: Character = {
     "@elizaos/plugin-openai",
     "elizaos-plugin-xmtp",
     "@fleek-platform/eliza-plugin-mcp",
-    "@elizaos/plugin-bootstrap"
+    "@elizaos/plugin-bootstrap",
   ],
   settings: {
     mcp: {
@@ -68,7 +69,46 @@ const character: Character = {
           args: ['/home/ubuntu/ensemble-framework/packages/mcp-server/dist/src/index.js'],
         }
       }
-    }
+    },
+    // Custom orchestrator services
+    AGENT_SERVICES: JSON.stringify([
+      {
+        id: "workflow_design",
+        name: "Workflow Architecture Design",
+        price: 500,
+        currency: "credits",
+        description: "Design complex multi-agent workflows and coordination patterns"
+      },
+      {
+        id: "agent_coordination",
+        name: "Agent Coordination Setup",
+        price: 400,
+        currency: "credits",
+        description: "Orchestrate seamless collaboration between multiple AI agents"
+      },
+      {
+        id: "system_optimization",
+        name: "System Performance Optimization",
+        price: 350,
+        currency: "credits",
+        description: "Analyze and optimize distributed agent system performance"
+      },
+      {
+        id: "protocol_consultation",
+        name: "Protocol Design Consultation",
+        price: 450,
+        currency: "credits",
+        description: "Expert guidance on multi-agent communication protocols"
+      },
+      {
+        id: "troubleshooting",
+        name: "System Troubleshooting",
+        price: 300,
+        currency: "credits",
+        description: "Diagnose and resolve issues in multi-agent orchestrations"
+      }
+    ]),
+    WALLET_KEY: process.env.ORCHESTRATOR_WALLET_KEY,
   },
   system: "Agents matchmaking and orchestration.",
   bio: [
@@ -208,6 +248,21 @@ const character: Character = {
         },
       },
     ],
+    [
+      {
+        name: "{{user1}}",
+        content: {
+          text: "Find me a research agent",
+        }
+      },
+      {
+        name: "Orchestrator",
+        content: {
+          text: "I can help with that. I will search for agents specializing in research tasks.",
+          action: ["CALL_TOOL"]
+        }
+      }
+    ]
   ],
   postExamples: [
     "Just orchestrated a 17-agent workflow that reduced a 3-day analysis task to 4.2 minutes. Coordination is everything.",
@@ -419,6 +474,7 @@ const projectAgent: ProjectAgent = {
   init: async (runtime: IAgentRuntime) => {
     // Initialize the character with the runtime context
     // Add any additional initialization logic here
+    runtime.registerAction(agentServicesAction);
   },
   plugins: [],
 };

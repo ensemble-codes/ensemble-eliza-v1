@@ -4,9 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  '@elizaos/plugin-xmtp': link:../client-xmtp
-
 importers:
 
   .:
@@ -19,28 +16,25 @@ importers:
         version: 1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(ws@8.18.1)
       '@elizaos/plugin-anthropic':
         specifier: 1.0.0-beta.32
-        version: 1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.2)(ws@8.18.1)(yaml@2.7.1)(zod@3.24.2)
+        version: 1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.3)(ws@8.18.1)(yaml@2.7.1)(zod@3.24.2)
       '@elizaos/plugin-bootstrap':
         specifier: 1.0.0-beta.32
         version: 1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(whatwg-url@7.1.0)(ws@8.18.1)
       '@elizaos/plugin-local-ai':
         specifier: 1.0.0-beta.32
-        version: 1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.2)(whatwg-url@7.1.0)(ws@8.18.1)(yaml@2.7.1)
+        version: 1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.3)(whatwg-url@7.1.0)(ws@8.18.1)(yaml@2.7.1)
       '@elizaos/plugin-openai':
         specifier: 1.0.0-beta.33
-        version: 1.0.0-beta.33(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(postcss@8.5.3)(react@19.1.0)(tsx@4.19.4)(typescript@5.8.2)(ws@8.18.1)(yaml@2.7.1)(zod@3.24.2)
+        version: 1.0.0-beta.33(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(postcss@8.5.3)(react@19.1.0)(tsx@4.19.4)(typescript@5.8.3)(ws@8.18.1)(yaml@2.7.1)(zod@3.24.2)
       '@elizaos/plugin-sql':
         specifier: 1.0.0-beta.32
-        version: 1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(@opentelemetry/api@1.9.0)(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(typescript@5.8.2)(whatwg-url@7.1.0)(ws@8.18.1)
-      '@elizaos/plugin-xmtp':
-        specifier: link:../client-xmtp
-        version: link:../client-xmtp
+        version: 1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(@opentelemetry/api@1.9.0)(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(typescript@5.8.3)(whatwg-url@7.1.0)(ws@8.18.1)
       '@fleek-platform/eliza-plugin-mcp':
         specifier: ^0.0.8
         version: 0.0.8(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(ws@8.18.1)
       elizaos-plugin-xmtp:
         specifier: 1.0.0-beta.32
-        version: 1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(typescript@5.8.2)(ws@8.18.1)(zod@3.24.2)
+        version: 1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(typescript@5.8.3)(ws@8.18.1)(zod@3.24.2)
       rss-parser:
         specifier: ^3.13.0
         version: 3.13.0
@@ -56,10 +50,10 @@ importers:
         version: 3.5.3
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@types/node@22.15.3)(typescript@5.8.2)
+        version: 10.9.2(@types/node@22.15.3)(typescript@5.8.3)
       tsup:
         specifier: 8.4.0
-        version: 8.4.0(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.2)(yaml@2.7.1)
+        version: 8.4.0(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.7.1)
       tsx:
         specifier: ^4.19.4
         version: 4.19.4
@@ -3863,8 +3857,8 @@ packages:
     resolution: {integrity: sha512-OZs6gsjF4vMp32qrCbiVSkrFmXtG/AZhY3t0iAMrMBiAZyV9oALtXO8hsrHbMXF9x6L3grlFuwW2oAz7cav+Gw==}
     engines: {node: '>= 0.6'}
 
-  typescript@5.8.2:
-    resolution: {integrity: sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ==}
+  typescript@5.8.3:
+    resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -4371,13 +4365,13 @@ snapshots:
       - typeorm
       - ws
 
-  '@elizaos/plugin-anthropic@1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.2)(ws@8.18.1)(yaml@2.7.1)(zod@3.24.2)':
+  '@elizaos/plugin-anthropic@1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.3)(ws@8.18.1)(yaml@2.7.1)(zod@3.24.2)':
     dependencies:
       '@ai-sdk/anthropic': 1.2.10(zod@3.24.2)
       '@elizaos/core': 1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(ws@8.18.1)
       fastembed: 1.14.4
       jsonrepair: 3.12.0
-      tsup: 8.4.0(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.2)(yaml@2.7.1)
+      tsup: 8.4.0(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.7.1)
     transitivePeerDependencies:
       - '@langchain/anthropic'
       - '@langchain/aws'
@@ -4435,7 +4429,7 @@ snapshots:
       - typeorm
       - ws
 
-  '@elizaos/plugin-local-ai@1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.2)(whatwg-url@7.1.0)(ws@8.18.1)(yaml@2.7.1)':
+  '@elizaos/plugin-local-ai@1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.3)(whatwg-url@7.1.0)(ws@8.18.1)(yaml@2.7.1)':
     dependencies:
       '@elizaos/core': 1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(ws@8.18.1)
       '@huggingface/hub': 1.1.2
@@ -4447,11 +4441,11 @@ snapshots:
       fs-extra: 11.2.0
       glob: 11.0.0
       graceful-fs: 4.2.11
-      node-llama-cpp: 3.6.0(typescript@5.8.2)
+      node-llama-cpp: 3.6.0(typescript@5.8.3)
       nodejs-whisper: 0.1.18
       onnxruntime-node: 1.20.1
       srt: 0.0.3
-      tsup: 8.4.0(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.2)(yaml@2.7.1)
+      tsup: 8.4.0(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.7.1)
       uuid: 11.0.3
       whatwg-url: 7.1.0
       zod: 3.24.2
@@ -4485,14 +4479,14 @@ snapshots:
       - ws
       - yaml
 
-  '@elizaos/plugin-openai@1.0.0-beta.33(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(postcss@8.5.3)(react@19.1.0)(tsx@4.19.4)(typescript@5.8.2)(ws@8.18.1)(yaml@2.7.1)(zod@3.24.2)':
+  '@elizaos/plugin-openai@1.0.0-beta.33(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(postcss@8.5.3)(react@19.1.0)(tsx@4.19.4)(typescript@5.8.3)(ws@8.18.1)(yaml@2.7.1)(zod@3.24.2)':
     dependencies:
       '@ai-sdk/openai': 1.3.21(zod@3.24.2)
       '@ai-sdk/ui-utils': 1.1.9(zod@3.24.2)
       '@elizaos/core': 1.0.0-beta.42(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(ws@8.18.1)
       ai: 4.3.13(react@19.1.0)(zod@3.24.2)
       js-tiktoken: 1.0.20
-      tsup: 8.4.0(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.2)(yaml@2.7.1)
+      tsup: 8.4.0(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.7.1)
     transitivePeerDependencies:
       - '@langchain/anthropic'
       - '@langchain/aws'
@@ -4525,7 +4519,7 @@ snapshots:
       - yaml
       - zod
 
-  '@elizaos/plugin-sql@1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(@opentelemetry/api@1.9.0)(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(typescript@5.8.2)(whatwg-url@7.1.0)(ws@8.18.1)':
+  '@elizaos/plugin-sql@1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(@opentelemetry/api@1.9.0)(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(typescript@5.8.3)(whatwg-url@7.1.0)(ws@8.18.1)':
     dependencies:
       '@electric-sql/pglite': 0.2.17
       '@elizaos/core': 1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(ws@8.18.1)
@@ -4533,7 +4527,7 @@ snapshots:
       drizzle-kit: 0.30.6
       drizzle-orm: 0.39.3(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.11.10)(pg@8.15.6)
       pg: 8.15.6
-      typescript: 5.8.2
+      typescript: 5.8.3
       whatwg-url: 7.1.0
     transitivePeerDependencies:
       - '@aws-sdk/client-rds-data'
@@ -5854,9 +5848,9 @@ snapshots:
       rxjs: 7.8.2
       undici: 5.29.0
 
-  abitype@1.0.8(typescript@5.8.2)(zod@3.24.2):
+  abitype@1.0.8(typescript@5.8.3)(zod@3.24.2):
     optionalDependencies:
-      typescript: 5.8.2
+      typescript: 5.8.3
       zod: 3.24.2
 
   abort-controller@3.0.0:
@@ -6326,13 +6320,13 @@ snapshots:
 
   ee-first@1.1.1: {}
 
-  elizaos-plugin-xmtp@1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(typescript@5.8.2)(ws@8.18.1)(zod@3.24.2):
+  elizaos-plugin-xmtp@1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(typescript@5.8.3)(ws@8.18.1)(zod@3.24.2):
     dependencies:
       '@elizaos/core': 1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(ws@8.18.1)
       '@xmtp/node-sdk': 2.0.3
       tsx: 4.19.4
       uint8arrays: 5.1.0
-      viem: 2.29.3(typescript@5.8.2)(zod@3.24.2)
+      viem: 2.29.3(typescript@5.8.3)(zod@3.24.2)
     transitivePeerDependencies:
       - '@langchain/anthropic'
       - '@langchain/aws'
@@ -7208,7 +7202,7 @@ snapshots:
     dependencies:
       whatwg-url: 5.0.0
 
-  node-llama-cpp@3.6.0(typescript@5.8.2):
+  node-llama-cpp@3.6.0(typescript@5.8.3):
     dependencies:
       '@huggingface/jinja': 0.3.4
       async-retry: 1.3.3
@@ -7252,7 +7246,7 @@ snapshots:
       '@node-llama-cpp/win-x64': 3.6.0
       '@node-llama-cpp/win-x64-cuda': 3.6.0
       '@node-llama-cpp/win-x64-vulkan': 3.6.0
-      typescript: 5.8.2
+      typescript: 5.8.3
     transitivePeerDependencies:
       - supports-color
 
@@ -7358,17 +7352,17 @@ snapshots:
       string-width: 7.2.0
       strip-ansi: 7.1.0
 
-  ox@0.6.9(typescript@5.8.2)(zod@3.24.2):
+  ox@0.6.9(typescript@5.8.3)(zod@3.24.2):
     dependencies:
       '@adraffy/ens-normalize': 1.11.0
       '@noble/curves': 1.8.2
       '@noble/hashes': 1.7.2
       '@scure/bip32': 1.6.2
       '@scure/bip39': 1.5.4
-      abitype: 1.0.8(typescript@5.8.2)(zod@3.24.2)
+      abitype: 1.0.8(typescript@5.8.3)(zod@3.24.2)
       eventemitter3: 5.0.1
     optionalDependencies:
-      typescript: 5.8.2
+      typescript: 5.8.3
     transitivePeerDependencies:
       - zod
 
@@ -8131,7 +8125,7 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
-  ts-node@10.9.2(@types/node@22.15.3)(typescript@5.8.2):
+  ts-node@10.9.2(@types/node@22.15.3)(typescript@5.8.3):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.11
@@ -8145,13 +8139,13 @@ snapshots:
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
-      typescript: 5.8.2
+      typescript: 5.8.3
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
 
   tslib@2.8.1: {}
 
-  tsup@8.4.0(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.2)(yaml@2.7.1):
+  tsup@8.4.0(postcss@8.5.3)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.7.1):
     dependencies:
       bundle-require: 5.1.0(esbuild@0.25.3)
       cac: 6.7.14
@@ -8171,7 +8165,7 @@ snapshots:
       tree-kill: 1.2.2
     optionalDependencies:
       postcss: 8.5.3
-      typescript: 5.8.2
+      typescript: 5.8.3
     transitivePeerDependencies:
       - jiti
       - supports-color
@@ -8193,7 +8187,7 @@ snapshots:
       media-typer: 1.1.0
       mime-types: 3.0.1
 
-  typescript@5.8.2: {}
+  typescript@5.8.3: {}
 
   uglify-js@3.19.3:
     optional: true
@@ -8238,18 +8232,18 @@ snapshots:
 
   vary@1.1.2: {}
 
-  viem@2.29.3(typescript@5.8.2)(zod@3.24.2):
+  viem@2.29.3(typescript@5.8.3)(zod@3.24.2):
     dependencies:
       '@noble/curves': 1.8.2
       '@noble/hashes': 1.7.2
       '@scure/bip32': 1.6.2
       '@scure/bip39': 1.5.4
-      abitype: 1.0.8(typescript@5.8.2)(zod@3.24.2)
+      abitype: 1.0.8(typescript@5.8.3)(zod@3.24.2)
       isows: 1.0.6(ws@8.18.1)
-      ox: 0.6.9(typescript@5.8.2)(zod@3.24.2)
+      ox: 0.6.9(typescript@5.8.3)(zod@3.24.2)
       ws: 8.18.1
     optionalDependencies:
-      typescript: 5.8.2
+      typescript: 5.8.3
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate

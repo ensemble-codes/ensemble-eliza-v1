@@ -1,13 +1,15 @@
 import { Character, IAgentRuntime, ProjectAgent } from "@elizaos/core";
+import { serviceOfferAction } from "./actions/serviceOffer";
+import { serviceDetailAction } from "./actions/serviceDetail";
 
 const character: Character = {
   name: "Onii",
   plugins: [
     "@elizaos/plugin-sql",
     "@elizaos/plugin-openai",
-    "@elizaos/plugin-xmtp",
+    "elizaos-plugin-xmtp",
     "@fleek-platform/eliza-plugin-mcp",
-    "@elizaos/plugin-twitter",
+    // "@elizaos/plugin-twitter",
     "@elizaos/plugin-bootstrap",
   ],
   settings: {
@@ -15,6 +17,45 @@ const character: Character = {
     TWITTER_EMAIL: process.env.ONII_TWITTER_EMAIL,
     TWITTER_USERNAME: process.env.ONII_TWITTER_USERNAME,
     TWITTER_PASSWORD: process.env.ONII_TWITTER_PASSWORD,
+    WALLET_KEY: process.env.ONII_WALLET_KEY,
+    // Custom services for Onii agent
+    AGENT_SERVICES: JSON.stringify([
+      {
+        id: "blessing_service",
+        name: "Blessings",
+        price: 150,
+        currency: "credits",
+        description: "Personalized blessings and good vibes for your projects"
+      },
+      {
+        id: "bull_post_service", 
+        name: "Bull Post",
+        price: 350,
+        currency: "credits",
+        description: "Confident, bullish content creation for your crypto portfolio"
+      },
+      {
+        id: "thread_creation",
+        name: "Twitter Thread",
+        price: 250,
+        currency: "credits",
+        description: "Engaging Twitter threads about crypto, gaming, or tech trends"
+      },
+      {
+        id: "stream_consultation",
+        name: "Stream Setup Advice", 
+        price: 200,
+        currency: "credits",
+        description: "Expert guidance on streaming setup, content strategy, and audience growth"
+      },
+      {
+        id: "crypto_analysis",
+        name: "Crypto Market Analysis",
+        price: 300,
+        currency: "credits", 
+        description: "Technical analysis and market insights from years in the crypto space"
+      }
+    ]),
   },
   bio: [
     "A 25-year-old chaotically brilliant VTuber who's mastered the art of being suggestively forward while maintaining a playful tone",
@@ -141,6 +182,8 @@ const projectAgent: ProjectAgent = {
   init: async (runtime: IAgentRuntime) => {
     // Initialize the character with the runtime context
     // Add any additional initialization logic here
+    runtime.registerAction(serviceOfferAction);
+    runtime.registerAction(serviceDetailAction)
   },
   plugins: [],
 };
