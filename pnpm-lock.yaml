@@ -4,9 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  '@elizaos/plugin-xmtp': link:../client-xmtp
-
 importers:
 
   .:
@@ -32,9 +29,6 @@ importers:
       '@elizaos/plugin-sql':
         specifier: 1.0.0-beta.32
         version: 1.0.0-beta.32(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(@opentelemetry/api@1.9.0)(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(typescript@5.8.3)(whatwg-url@7.1.0)(ws@8.18.1)
-      '@elizaos/plugin-xmtp':
-        specifier: link:../client-xmtp
-        version: link:../client-xmtp
       '@fleek-platform/eliza-plugin-mcp':
         specifier: ^0.0.8
         version: 0.0.8(@langchain/core@0.3.51(openai@4.97.0(ws@8.18.1)(zod@3.24.2)))(axios@1.9.0)(openai@4.97.0(ws@8.18.1)(zod@3.24.2))(ws@8.18.1)

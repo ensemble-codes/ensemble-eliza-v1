@@ -55,7 +55,7 @@ const character: Character = {
   plugins: [
     "@elizaos/plugin-sql",
     "@elizaos/plugin-openai",
-    "@elizaos/plugin-xmtp",
+    "elizaos-plugin-xmtp",
     "@fleek-platform/eliza-plugin-mcp",
     "@elizaos/plugin-bootstrap",
   ],
