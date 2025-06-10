@@ -24,8 +24,8 @@ interface ServiceDetailsResponse {
     };
 }
 
-export const serviceDetailAction: Action = {
-    name: "SERVICE_DETAIL",
+export const serviceDetailsAction: Action = {
+    name: "SERVICE_DETAILS",
     similes: ["SERVICE_DETAILS", "SERVICE_DESCRIPTION", "SERVICE_INFO"],
     description: "Provides detailed information about a specific service including parameters",
     validate: async (runtime: IAgentRuntime, message: Memory, state: State) => {
@@ -76,7 +76,7 @@ Do not add any additional text or explanations.
                 const responseContent: Content = {
                     text: `I'm not sure which service you're asking about. I offer these services:\n\n${services.map((s, i) => `${i + 1}. **${s.name}** - ${s.description}`).join('\n')}\n\nCould you please specify which one you'd like to know more about?`,
                     source: message.content.source,
-                    actions: ["SERVICE_DETAIL"]
+                    actions: ["SERVICE_DETAILS"]
                 };
                 await callback(responseContent);
                 return responseContent;
@@ -89,7 +89,7 @@ Do not add any additional text or explanations.
                 const responseContent: Content = {
                     text: `I couldn't find a service with that name. Available services are:\n\n${services.map((s, i) => `${i + 1}. **${s.name}** - ${s.description}`).join('\n')}\n\nWhich one would you like to know more about?`,
                     source: message.content.source,
-                    actions: ["SERVICE_DETAIL"]
+                    actions: ["SERVICE_DETAILS"]
                 };
                 await callback(responseContent);
                 return responseContent;
@@ -113,7 +113,7 @@ Do not add any additional text or explanations.
             const responseContent: Content = {
                 text: JSON.stringify(serviceDetailsResponse, null, 2),
                 source: message.content.source,
-                actions: ["SERVICE_DETAIL"],
+                actions: ["SERVICE_DETAILS"],
                 data: serviceDetailsResponse
             };
 
@@ -121,11 +121,11 @@ Do not add any additional text or explanations.
             return responseContent;
 
         } catch (error) {
-            logger.error("Error in SERVICE_DETAIL action:", error);
+            logger.error("Error in SERVICE_DETAILS action:", error);
 
             const errorResponse: Content = {
                 text: "I apologize, but I'm having trouble accessing my services information right now. Please try again later.",
-                actions: ["SERVICE_DETAIL_ERROR"],
+                actions: ["SERVICE_DETAILS_ERROR"],
                 source: message.content.source,
             };
 
