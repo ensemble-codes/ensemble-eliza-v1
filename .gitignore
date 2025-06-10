@@ -4,3 +4,6 @@
 /models
 
 .env
+
+memory
+xmtp-*.db3*
