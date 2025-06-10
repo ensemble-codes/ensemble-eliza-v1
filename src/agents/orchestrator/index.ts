@@ -108,6 +108,7 @@ const character: Character = {
         description: "Diagnose and resolve issues in multi-agent orchestrations"
       }
     ]),
+    WALLET_KEY: process.env.ORCHESTRATOR_WALLET_KEY,
   },
   system: "Agents matchmaking and orchestration.",
   bio: [

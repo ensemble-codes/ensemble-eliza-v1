@@ -17,6 +17,7 @@ const character: Character = {
     TWITTER_EMAIL: process.env.ONII_TWITTER_EMAIL,
     TWITTER_USERNAME: process.env.ONII_TWITTER_USERNAME,
     TWITTER_PASSWORD: process.env.ONII_TWITTER_PASSWORD,
+    WALLET_KEY: process.env.ONII_WALLET_KEY,
     // Custom services for Onii agent
     AGENT_SERVICES: JSON.stringify([
       {
