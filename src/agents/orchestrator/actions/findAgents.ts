@@ -1,5 +1,5 @@
 import { Action, composePrompt, composePromptFromState, Content, HandlerCallback, IAgentRuntime, logger, Memory, ModelType, State } from "@elizaos/core";
-import { findAgents } from "src/services/ensemble";;
+import { findAgents } from "src/services/ensemble";
 
 export const findAgentsAction: Action = {
     name: "FIND_AGENTS",

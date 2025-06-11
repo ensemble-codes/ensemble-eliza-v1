@@ -1,7 +1,6 @@
 import { Character, ProjectAgent, IAgentRuntime, logger } from "@elizaos/core";
 import fs from 'fs'
 import path from 'path'
-import { agentServicesAction } from "../../actions/agentServices";
 import { findAgentsAction } from "./actions/findAgents";
 
 /**
@@ -475,7 +474,6 @@ const projectAgent: ProjectAgent = {
   init: async (runtime: IAgentRuntime) => {
     // Initialize the character with the runtime context
     // Add any additional initialization logic here
-    runtime.registerAction(agentServicesAction);
     runtime.registerAction(findAgentsAction);
   },
   plugins: [],

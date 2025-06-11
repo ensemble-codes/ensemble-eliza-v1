@@ -1,7 +1,7 @@
 import { Character, IAgentRuntime, ProjectAgent } from "@elizaos/core";
-import { listServicesAction } from "./actions/listServices";
-import { serviceDetailsAction } from "./actions/serviceDetails";
-import { createTaskAction } from "./actions/createTask";
+import { listServicesAction } from "../../actions";
+import { serviceDetailsAction } from "../../actions";
+import { createTaskAction } from "../../actions";
 
 const character: Character = {
   name: "Onii",
