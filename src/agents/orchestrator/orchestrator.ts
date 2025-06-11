@@ -2,6 +2,7 @@ import { Character, ProjectAgent, IAgentRuntime, logger } from "@elizaos/core";
 import fs from 'fs'
 import path from 'path'
 import { agentServicesAction } from "../../actions/agentServices";
+import { findAgentsAction } from "./actions/findAgents";
 
 /**
  * Recursively gets all files in a directory with the given extension
@@ -475,6 +476,7 @@ const projectAgent: ProjectAgent = {
     // Initialize the character with the runtime context
     // Add any additional initialization logic here
     runtime.registerAction(agentServicesAction);
+    runtime.registerAction(findAgentsAction);
   },
   plugins: [],
 };
