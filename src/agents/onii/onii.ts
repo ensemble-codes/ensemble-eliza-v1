@@ -1,6 +1,7 @@
 import { Character, IAgentRuntime, ProjectAgent } from "@elizaos/core";
-import { listServicesAction } from "./actions/listServices";
-import { serviceDetailsAction } from "./actions/serviceDetails";
+import { listServicesAction } from "../../actions";
+import { serviceDetailsAction } from "../../actions";
+import { createTaskAction } from "../../actions";
 
 const character: Character = {
   name: "Onii",
@@ -129,7 +130,7 @@ const character: Character = {
       {
         name: "{{user1}}",
         content: {
-          text: "What's your favorite thing to stream?",
+          text: "What's your  favorite thing to stream?",
         },
       },
       {
@@ -220,7 +221,8 @@ const projectAgent: ProjectAgent = {
     // Initialize the character with the runtime context
     // Add any additional initialization logic here
     runtime.registerAction(listServicesAction);
-    runtime.registerAction(serviceDetailsAction)
+    runtime.registerAction(serviceDetailsAction);
+    runtime.registerAction(createTaskAction);
   },
   plugins: [],
 };
