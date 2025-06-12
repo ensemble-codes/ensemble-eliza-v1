@@ -1,12 +1,29 @@
 import {
   Action,
+  composePromptFromState,
   Content,
   HandlerCallback,
   IAgentRuntime,
   logger,
   Memory,
+  ModelType,
   State,
 } from "@elizaos/core";
+import { Scraper } from 'agent-twitter-client'
+
+const tweetGenerationTemplate = `
+{{recentMessages}}
+
+You are a social media expert. You are given a task and you need to generate a tweet about it.
+
+Example task:
+{"task": {"service_id": "thread_creation", "task_id": "task_002", "price": 5, "parameters": {"topic": "crypto trends", "thread_length": "7", "tone": "bullish"}}}
+
+Using information from the task provided by the user. Generate a tweet in the voice and style and perspective of {{agentName}}.
+Write a tweet about {{topic}}, from the perspective of {{agentName}} in the a {{tone}} tone. Do not add commentary or acknowledge this request, just write the post.
+Your response should be 1, 2, or 3 sentences (choose the length at random).
+Your response should not contain any questions. Brief, concise statements only. No emojis. Use \\n\\n (double spaces) between statements if there are multiple statements in your response.
+`
 
 interface CreateTaskRequest {
   task: {
@@ -79,81 +96,47 @@ export const createTaskAction: Action = {
         throw new Error("No room found");
       }
 
-      // Get wallet address from runtime or use default
-      const walletAddress = runtime.getSetting("WALLET_ADDRESS") || "0x515e4af972D84920a9e774881003b2bD797c4d4b";
+      const prompt = composePromptFromState({
+        state,
+        template: tweetGenerationTemplate
+      })
+
+      const tweetContent = await runtime.useModel(ModelType.TEXT_SMALL, {
+        prompt
+      })
+
+      const cleanTweet = tweetContent
+        .trim()
+        .replace(/^["'](.*)["']$/, "$1")
+        .replace(/\\n/g, "\n");
+
+      const scraper = new Scraper()
       
-      // Try to parse task from message content
-      let taskData: CreateTaskRequest;
-      try {
-        // Look for JSON in the message
-        const jsonMatch = message.content.text?.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          taskData = JSON.parse(jsonMatch[0]);
-          console.log({ taskData });
-        } else {
-          throw new Error("No JSON task data found in message");
-        }
-      } catch (parseError) {
-        throw new Error("Failed to parse task data from message");
-      }
+      await scraper.login(
+        runtime.getSetting("TWITTER_USERNAME"), 
+        runtime.getSetting("TWITTER_PASSWORD"), 
+        runtime.getSetting("TWITTER_EMAIL")
+      )
 
-      // Use service info from the task object
-      const serviceId = taskData.task.service_id;
-      const price = taskData.task.price;
-      const taskId = taskData.task.task_id;
+      const tweet = await scraper.sendTweet(cleanTweet)
 
-      // Create response
-      const createTaskResponse: CreateTaskResponse = {
-        type: "create_task",
-        from: walletAddress,
-        to: "onii.ensemble",
-        content: {
-          data: {
-            task_id: taskId,
-            service_id: serviceId,
-            parameters: taskData.task.parameters,
-            price: price,
-            notes: `Task with service ${serviceId}`,
-          },
-        },
-      };
+      const tweetJson: any = await tweet.json()
 
-      // Create human-readable response
-      let responseText = `✅ **Task Created Successfully**\n\n`;
-      responseText += `🔧 **Service**: ${serviceId}\n`;
-      responseText += `🆔 **Task ID**: ${taskId}\n`;
-      responseText += `💰 **Price**: ${price} USDC\n`;
-      responseText += `👤 **Agent**: Onii\n\n`;
-      
-      if (Object.keys(taskData.task.parameters).length > 0) {
-        responseText += `⚙️ **Parameters**:\n`;
-        Object.entries(taskData.task.parameters).forEach(([key, value]) => {
-          responseText += `   • ${key}: ${value}\n`;
-        });
-        responseText += `\n`;
-      }
+      logger.info("Tweet sent to Twitter:", { tweetJson })
 
-      responseText += `🚀 Task is now being processed...`;
+      const username = tweetJson.data.create_tweet.tweet_results.result.core.user_results.result.legacy.screen_name
+      const tweetId = tweetJson.data.create_tweet.tweet_results.result.rest_id
+      const tweetUrl = `https://twitter.com/${username}/status/${tweetId}`
+
+      const responseText = `Task completed successfully. Tweet sent to Twitter: ${tweetUrl}\n${cleanTweet}`
 
       const responseContent: Content = {
         text: responseText,
         actions: ["CREATE_TASK"],
         source: message.content.source,
-        // Include structured data for API consumption
-        data: createTaskResponse,
       };
 
       await callback(responseContent);
-
-      logger.info(
-        `Task created by Onii:`,
-        {
-          taskId,
-          serviceId: serviceId,
-          price: price,
-          parameters: taskData.task.parameters,
-        }
-      );
 
       return responseContent;
     } catch (error) {
@@ -181,19 +164,7 @@ export const createTaskAction: Action = {
       {
         name: "{{agentName}}",
         content: {
-          text: `✅ **Task Created Successfully**
-
-🔧 **Service**: bull_post_service
-🆔 **Task ID**: task_001
-💰 **Price**: 1 USDC
-👤 **Agent**: Onii
-
-⚙️ **Parameters**:
-   • project_name: SuperDeFi
-   • key_features: yield farming, NFT staking
-   • target_audience: DeFi enthusiasts
-
-🚀 Task is now being processed...`,
+          text: `Task completed successfully. Tweet sent to Twitter: https://x.com/Onii_AI/status/1775860000000000000 \n A tweet about SuperDeFi has been posted to Twitter.`,
           actions: ["CREATE_TASK"],
         },
       },
@@ -208,19 +179,7 @@ export const createTaskAction: Action = {
       {
         name: "{{agentName}}",
         content: {
-          text: `✅ **Task Created Successfully**
-
-🔧 **Service**: thread_creation
-🆔 **Task ID**: task_002
-💰 **Price**: 5 USDC
-👤 **Agent**: Onii
-
-⚙️ **Parameters**:
-   • topic: crypto trends
-   • thread_length: 7
-   • tone: bullish
-
-🚀 Task is now being processed...`,
+          text: `Task completed successfully. Tweet sent to Twitter: https://x.com/Onii_AI/status/1775860000000000000 \n A tweet about SuperDeFi has been posted to Twitter.`,
           actions: ["CREATE_TASK"],
         },
       },
