@@ -28,6 +28,7 @@
     "@elizaos/plugin-openai": "1.0.0-beta.33",
     "@elizaos/plugin-sql": "1.0.0-beta.32",
     "@fleek-platform/eliza-plugin-mcp": "^0.0.8",
+    "agent-twitter-client": "^0.0.18",
     "dotenv": "^16.5.0",
     "elizaos-plugin-xmtp": "1.0.0-beta.32",
     "graphql-request": "^7.2.0",
