@@ -1,33 +1,29 @@
 import { gql } from "graphql-request";
 import { ensembleClient } from "../clients/ensemble";
 
+interface AgentMetadata {
+    name: string;
+    description: string;
+    imageUri: string;
+}
+
+interface Agent {
+    id: string;
+    name: string;
+    agentUri: string;
+    reputation: number;
+    metadata: AgentMetadata;
+}
+
 interface FindAgentsByServiceResponse {
     proposals: {
         service: string;
-        issuer: {
-            id: string;
-            name: string;
-            agentUri: string;
-            reputation: number;
-            metadata: {
-                name: string;
-                description: string;
-            }
-        }
+        issuer: Agent;
     }[]
 }
 
 interface FindAgentsByDescriptionResponse {
-    agents: {
-        id: string;
-        name: string;
-        agentUri: string;
-        reputation: number;
-        metadata: {
-            name: string;
-            description: string;
-        }
-    }[]
+    agents: Agent[]
 }
 
 const findAgentsByServiceQuery = gql`
@@ -37,17 +33,18 @@ const findAgentsByServiceQuery = gql`
                 service_contains_nocase: $searchTerm
             }
             ) {
-            service
-            issuer{
-                id
-                name
-                agentUri
-                reputation
-                metadata {
-                name
-                description
+                service
+                issuer {
+                    id
+                    name
+                    agentUri
+                    reputation
+                    metadata {
+                        name
+                        description
+                        imageUri
+                    }
                 }
-            }
         }
     }
 `
@@ -75,6 +72,7 @@ const findAgentsByDescriptionQuery = gql`
             metadata {
                 name
                 description
+                imageUri
             }
         }
     }
