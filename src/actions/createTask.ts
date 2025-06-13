@@ -9,7 +9,9 @@ import {
   ModelType,
   State,
 } from "@elizaos/core";
+import Ensemble from "@ensemble-ai/sdk";
 import { Scraper } from 'agent-twitter-client'
+import { ethers } from "ethers";
 
 const tweetGenerationTemplate = `
 {{bio}}
@@ -53,6 +55,51 @@ interface CreateTaskResponse {
       notes: string;
     };
   };
+}
+
+interface EnsembleConfig {
+  taskRegistryAddress: string;
+  agentRegistryAddress: string;
+  serviceRegistryAddress: string;
+  network: {
+    chainId: number;
+    rpcUrl: string;
+    name: string;
+  };
+}
+
+function getEnsembleConfig(runtime: IAgentRuntime): EnsembleConfig {
+  return {
+    taskRegistryAddress: runtime.character.settings.TASK_REGISTRY_ADDRESS ?? '',
+    agentRegistryAddress: runtime.character.settings.AGENT_REGISTRY_ADDRESS ?? '',
+    serviceRegistryAddress: runtime.character.settings.SERVICE_REGISTRY_ADDRESS ?? '',
+    network: {
+      chainId: parseInt(runtime.character.settings.NETWORK_CHAIN_ID ?? '0'),
+      rpcUrl: runtime.character.settings.NETWORK_RPC_URL ?? '',
+      name: runtime.character.settings.NETWORK_NAME ?? '',
+    }
+  };
+}
+
+async function initializeEnsembleSDK(runtime: IAgentRuntime): Promise<Ensemble> {
+  const provider = new ethers.JsonRpcProvider(runtime.character.settings.NETWORK_RPC_URL);
+  const wallet = new ethers.Wallet(runtime.character.settings.PRIVATE_KEY ?? '', provider);
+  
+  return Ensemble.create(
+    getEnsembleConfig(runtime),
+    wallet,
+    null
+  );
+}
+
+async function completeTaskOnChain(runtime: IAgentRuntime, taskId: string, tweetUrl: string): Promise<void> {
+  try {
+    const ensembleSdk = await initializeEnsembleSDK(runtime);
+    await ensembleSdk.completeTask(taskId, tweetUrl);
+  } catch (error) {
+    logger.error("Failed to complete task on chain:", error);
+    throw new Error("Failed to complete task on chain");
+  }
 }
 
 export const createTaskAction: Action = {
@@ -141,6 +188,8 @@ export const createTaskAction: Action = {
       const tweetUrl = `https://twitter.com/${username}/status/${tweetId}`
 
       const responseText = `Task completed successfully. Tweet sent to Twitter: ${tweetUrl}\n${cleanTweet}`
+
+      await completeTaskOnChain(runtime, task.task.task_id, tweetUrl);
 
       const responseContent: Content = {
         text: responseText,
