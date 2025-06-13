@@ -83,7 +83,7 @@ function getEnsembleConfig(runtime: IAgentRuntime): EnsembleConfig {
 
 async function initializeEnsembleSDK(runtime: IAgentRuntime): Promise<Ensemble> {
   const provider = new ethers.JsonRpcProvider(runtime.character.settings.NETWORK_RPC_URL);
-  const wallet = new ethers.Wallet(runtime.character.settings.PRIVATE_KEY ?? '', provider);
+  const wallet = new ethers.Wallet(runtime.character.settings.WALLET_KEY ?? '', provider);
   
   return Ensemble.create(
     getEnsembleConfig(runtime),
