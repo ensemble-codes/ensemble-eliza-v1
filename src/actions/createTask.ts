@@ -12,6 +12,12 @@ import {
 import { Scraper } from 'agent-twitter-client'
 
 const tweetGenerationTemplate = `
+{{bio}}
+{{lore}}
+{{topics}}
+
+{{characterPostExamples}}
+
 {{recentMessages}}
 
 You are a social media expert. You are given a task and you need to generate a tweet about it.
@@ -22,7 +28,7 @@ Example task:
 Using information from the task provided by the user. Generate a tweet in the voice and style and perspective of {{agentName}}.
 Write a tweet about {{topic}}, from the perspective of {{agentName}} in the a {{tone}} tone. Do not add commentary or acknowledge this request, just write the post.
 Your response should be 1, 2, or 3 sentences (choose the length at random).
-Your response should not contain any questions. Brief, concise statements only. No emojis. Use \\n\\n (double spaces) between statements if there are multiple statements in your response.
+Your response should not contain any questions. Brief, concise statements only. No emojis. The total character count MUST be less than 187. Use \\n\\n (double spaces) between statements if there are multiple statements in your response.
 `
 
 interface CreateTaskRequest {
@@ -96,9 +102,15 @@ export const createTaskAction: Action = {
         throw new Error("No room found");
       }
 
+      const task = JSON.parse(message.content.text ?? "");
+
+      const { topic, tone } = task.task.parameters;
+
+      const template = tweetGenerationTemplate.replace("{{topic}}", topic).replace("{{tone}}", tone);
+
       const prompt = composePromptFromState({
         state,
-        template: tweetGenerationTemplate
+        template,
       })
 
       const tweetContent = await runtime.useModel(ModelType.TEXT_SMALL, {
