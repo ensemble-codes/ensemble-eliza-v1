@@ -19,6 +19,12 @@ const character: Character = {
     TWITTER_USERNAME: process.env.ONII_TWITTER_USERNAME,
     TWITTER_PASSWORD: process.env.ONII_TWITTER_PASSWORD,
     WALLET_KEY: process.env.ONII_WALLET_KEY,
+    TASK_REGISTRY_ADDRESS: process.env.TASK_REGISTRY_ADDRESS,
+    AGENT_REGISTRY_ADDRESS: process.env.AGENT_REGISTRY_ADDRESS,
+    SERVICE_REGISTRY_ADDRESS: process.env.SERVICE_REGISTRY_ADDRESS,
+    NETWORK_CHAIN_ID: process.env.NETWORK_CHAIN_ID,
+    NETWORK_RPC_URL: process.env.NETWORK_RPC_URL,
+    NETWORK_NAME: process.env.NETWORK_NAME,
     // Custom services for Onii agent
     AGENT_SERVICES: JSON.stringify([
       {
