@@ -8,9 +8,13 @@ const character: Character = {
   plugins: [
     "@elizaos/plugin-sql",
     "@elizaos/plugin-openai",
+    "elizaos-plugin-xmtp",
     "@fleek-platform/eliza-plugin-mcp",
     "@elizaos/plugin-bootstrap",
   ],
+  settings: {
+    WALLET_KEY: process.env.UNION_WALLET_KEY,
+  },
   system: "Union network FAQ specialist and technical advisor.",
   bio: [
     "Expert guide to Union's hyper-efficient zero-knowledge infrastructure layer for blockchain interoperability.",
