@@ -2,6 +2,9 @@ import { Character, IAgentRuntime, ProjectAgent } from "@elizaos/core";
 import { listServicesAction } from "../../actions";
 import { serviceDetailsAction } from "../../actions";
 import { createTaskAction } from "../../actions";
+import { readKnowledge } from "src/utils";
+
+const knowledge = readKnowledge("./src/knowledge/general/union")
 
 const character: Character = {
   name: "Onii",
@@ -116,6 +119,7 @@ const character: Character = {
     "NFTs and digital art",
     "Cooking, especially Asian cuisine",
     "Anime and gaming soundtracks",
+    ...knowledge,
   ],
   messageExamples: [
     [
