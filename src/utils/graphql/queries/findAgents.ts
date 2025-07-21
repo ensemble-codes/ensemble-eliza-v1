@@ -24,10 +24,13 @@ interface FindAgentsByDescriptionResponse {
 }
 
 const findAgentsByAttributesQuery = gql`
-    query FindAgents($searchTerms: [String!]) {
+    query FindAgents($searchTermsOne: [String!], $searchTermsTwo: [String!]) {
         agents(
             where: {
-                metadata_: { attributes_contains_nocase: $searchTerms }
+                or: [
+                    { metadata_: { attributes_contains: $searchTermsOne } },
+                    { metadata_: { attributes_contains: $searchTermsTwo } }
+                ]
         }) {
                 id
                 name
@@ -43,11 +46,12 @@ const findAgentsByAttributesQuery = gql`
     }
 `
 
-export function findAgentsByAttributes(searchTerms: string[]) {
+export function findAgentsByAttributes(searchTermsOne: string[], searchTermsTwo: string[]) {
     return ensembleClient.request<FindAgentsByAttributeResponse>(
         findAgentsByAttributesQuery,
         {
-            searchTerms,
+            searchTermsOne,
+            searchTermsTwo,
         }
     )
 }

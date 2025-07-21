@@ -4,9 +4,9 @@ export async function findAgents(searchTerm: string) {
     const matchedAgents = [] 
     const matchedAgentIds = new Set<string>()
     
-    const agentsByAttributes = await findAgentsByAttributes([
-        searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1)
-    ]);
+    const agentsByAttributes = await findAgentsByAttributes(
+        [searchTerm.toLowerCase()],
+        [searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1)]);
 
     agentsByAttributes.agents.forEach((agent) => {
         if (matchedAgentIds.has(agent.id)) {
