@@ -1,26 +1,28 @@
-import { findAgentsByDescription, findAgentsByService } from "../utils/graphql/queries/findAgents";
+import { findAgentsByDescription, findAgentsByAttributes } from "../utils/graphql/queries/findAgents";
 
 export async function findAgents(searchTerm: string) {
     const matchedAgents = [] 
     const matchedAgentIds = new Set<string>()
     
-    const agentsByService = await findAgentsByService(searchTerm);
+    const agentsByAttributes = await findAgentsByAttributes([
+        searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1)
+    ]);
 
-    agentsByService.proposals.forEach((agent) => {
-        if (matchedAgentIds.has(agent.issuer.id)) {
+    agentsByAttributes.agents.forEach((agent) => {
+        if (matchedAgentIds.has(agent.id)) {
             return
         }
         
         matchedAgents.push({
-            id: agent.issuer.id,
-            name: agent.issuer.metadata.name,
-            description: agent.issuer.metadata.description,
-            imageUri: agent.issuer.metadata.imageUri,
-            agentUri: agent.issuer.agentUri,
-            reputation: agent.issuer.reputation,
+            id: agent.id,
+            name: agent.metadata.name,
+            description: agent.metadata.description,
+            imageUri: agent.metadata.imageUri,
+            agentUri: agent.agentUri,
+            reputation: agent.reputation,
         })
 
-        matchedAgentIds.add(agent.issuer.id)
+        matchedAgentIds.add(agent.id)
     });
 
     const agentsByDescription = await findAgentsByDescription(searchTerm);

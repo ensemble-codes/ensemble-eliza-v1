@@ -15,45 +15,39 @@ interface Agent {
     metadata: AgentMetadata;
 }
 
-interface FindAgentsByServiceResponse {
-    proposals: {
-        service: string;
-        issuer: Agent;
-    }[]
+interface FindAgentsByAttributeResponse {
+    agents: Agent[]
 }
 
 interface FindAgentsByDescriptionResponse {
     agents: Agent[]
 }
 
-const findAgentsByServiceQuery = gql`
-    query FindAgents($searchTerm: String!) {
-        proposals(
+const findAgentsByAttributesQuery = gql`
+    query FindAgents($searchTerms: [String!]) {
+        agents(
             where: {
-                service_contains_nocase: $searchTerm
-            }
-            ) {
-                service
-                issuer {
-                    id
+                metadata_: { attributes_contains_nocase: $searchTerms }
+        }) {
+                id
+                name
+                agentUri
+                reputation
+                metadata {
+                    attributes
                     name
-                    agentUri
-                    reputation
-                    metadata {
-                        name
-                        description
-                        imageUri
-                    }
+                    description
+                    imageUri
                 }
         }
     }
 `
 
-export function findAgentsByService(searchTerm: string) {
-    return ensembleClient.request<FindAgentsByServiceResponse>(
-        findAgentsByServiceQuery,
+export function findAgentsByAttributes(searchTerms: string[]) {
+    return ensembleClient.request<FindAgentsByAttributeResponse>(
+        findAgentsByAttributesQuery,
         {
-            searchTerm,
+            searchTerms,
         }
     )
 }

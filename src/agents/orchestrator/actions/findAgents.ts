@@ -41,6 +41,9 @@ Input: "Can you recommend some agents for token analytics?"
 Input: "Looking for some agents that handle staking strategies."
 → Output: staking
 
+Input: "Looking for some agents that can help me swap tokens."
+→ Output: swap
+
 Only return the extracted query. Do not include the word "agents" in the output unless it's essential to the core topic.
 `;
         const prompt = composePromptFromState({
