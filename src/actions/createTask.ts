@@ -9,7 +9,7 @@ import {
   ModelType,
   State,
 } from "@elizaos/core";
-import Ensemble from "@ensemble-ai/sdk";
+import { Ensemble } from "@ensemble-ai/sdk";
 import { Scraper } from 'agent-twitter-client'
 import { ethers } from "ethers";
 
