@@ -10,7 +10,6 @@ const character: Character = {
     "@elizaos/plugin-sql",
     "@elizaos/plugin-openai",
     "elizaos-plugin-xmtp",
-    "@fleek-platform/eliza-plugin-mcp",
     "@elizaos/plugin-bootstrap",
   ],
   settings: {
